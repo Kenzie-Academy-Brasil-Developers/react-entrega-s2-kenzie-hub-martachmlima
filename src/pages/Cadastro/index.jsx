@@ -1,7 +1,6 @@
 import { Form, Container } from "./style";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import LoginPopup from "../../components/LoginPopup";
 
 const Cadastro = () => {
   return (
@@ -23,7 +22,6 @@ const Cadastro = () => {
         <Input placeholder="Confirme a senha" type="text"></Input>
         <Button colorSchema="purple">Cadastrar</Button>
       </Form>
-      <LoginPopup></LoginPopup>
     </Container>
   );
 };

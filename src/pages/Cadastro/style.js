@@ -51,6 +51,7 @@ export const Form = styled.form`
     color: var(--purple);
     :hover {
       background-color: var(--lightpurple);
+      cursor: pointer;
     }
   }
 `;

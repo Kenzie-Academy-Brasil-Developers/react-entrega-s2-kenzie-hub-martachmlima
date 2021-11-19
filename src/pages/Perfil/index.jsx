@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import { useState } from "react";
 import TechCard from "../../components/TechCard";
 import ProjectCard from "../../components/ProjectCard";
+import EditProject from "../../components/EditProject";
 
 const Perfil = () => {
   const [techs, setTechs] = useState([]);
