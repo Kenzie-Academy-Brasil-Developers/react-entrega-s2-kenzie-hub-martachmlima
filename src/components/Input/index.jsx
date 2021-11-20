@@ -1,11 +1,7 @@
-import { StyledInput } from "./style";
+import { Container } from "./style";
 
-const Input = ({ ...rest }) => {
-  return (
-    <StyledInput>
-      <input {...rest} />
-    </StyledInput>
-  );
+const Input = ({ children }) => {
+  return <Container>{children}</Container>;
 };
 
 export default Input;

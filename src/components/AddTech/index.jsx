@@ -1,22 +1,69 @@
 import { Container } from "./style";
 import Input from "../Input";
 import Button from "../Button";
+import { useState } from "react";
+import axios from "axios";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-const AddTech = () => {
+const AddTech = ({ setIsVisible }) => {
+  const [token] = useState(
+    JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
+  );
+
+  const createTech = ({ title, status }) => {
+    axios
+      .post(
+        "https://kenziehub.herokuapp.com/users/techs",
+        {
+          title: title,
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const formSchema = yup.object().shape({
+    title: yup.string().required("Campo obrigatório"),
+    status: yup.string().required("Campo obrigatório"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(formSchema) });
+
+  const changeVisibility = () => {
+    setIsVisible(false);
+  };
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(createTech)}>
       <section>
         <h4>Cadastrar Tecnologia</h4>
-        <span>X</span>
+        <span onClick={() => changeVisibility()}>X</span>
       </section>
-      <Input placeholder="nome da Tech"></Input>
+      <Input>
+        <input placeholder="nome da Tech" {...register("title")}></input>
+      </Input>
       <p>Selecionar status:</p>
-      <div>
-        <span>Iniciante</span>
-        <span>Intermediário</span>
-        <span>Avançado</span>
-      </div>
-      <Button>Cadastrar</Button>
+      <select {...register("status")}>
+        <option defaultValue="Iniciante">Iniciante</option>
+        <option value="Intermediário">Intermediário</option>
+        <option value="Avançado">Avançado</option>
+      </select>
+      <Button type="submit">Cadastrar</Button>
     </Container>
   );
 };

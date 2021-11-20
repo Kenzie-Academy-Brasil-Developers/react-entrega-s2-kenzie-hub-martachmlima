@@ -1,13 +1,70 @@
 import { Header, Container, Content, ProfileCard } from "./style";
 import Button from "../../components/Button";
-import { useState } from "react";
 import TechCard from "../../components/TechCard";
 import ProjectCard from "../../components/ProjectCard";
-import EditProject from "../../components/EditProject";
+import { Redirect } from "react-router";
+import { useHistory } from "react-router";
+import { useState } from "react";
+import axios from "axios";
+import AddTech from "../../components/AddTech";
+import AddProject from "../../components/AddProject";
 
-const Perfil = () => {
-  const [techs, setTechs] = useState([]);
-  const [projects, setProjects] = useState([]);
+const Perfil = ({ authenticated }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const [makeVisible, setMakeVisible] = useState(false);
+
+  const changeVisibility = () => {
+    setIsVisible(true);
+  };
+
+  const changeProdVisibility = () => {
+    setMakeVisible(true);
+  };
+
+  const [techs, setTechs] = useState();
+
+  const [token] = useState(
+    JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
+  );
+
+
+  const getTechs = () => {
+    axios
+      .get("https://kenziehub.herokuapp.com/users/techs", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        /* toast.error("E-mail ou senha inválidos"); */
+      });
+  };
+
+  const createTech = () => {
+    axios
+      .post("https://kenziehub.herokuapp.com/users/techs", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        /* toast.error("E-mail ou senha inválidos"); */
+      });
+  };
+
+  if (!authenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <>
       <Header>
@@ -19,7 +76,9 @@ const Perfil = () => {
         <Content>
           <span>
             <h4>Minhas Tecnologias</h4>
-            <Button colorSchema="green">+</Button>
+            <Button colorSchema="green" onClick={() => changeVisibility()}>
+              +
+            </Button>
           </span>
           <TechCard />
           <TechCard />
@@ -28,7 +87,7 @@ const Perfil = () => {
         <Content>
           <span>
             <h4>Meus trabalhos</h4>
-            <Button>+</Button>
+            <Button onClick={() => changeProdVisibility()}>+</Button>
           </span>
           <ProjectCard />
           <ProjectCard />
@@ -49,6 +108,8 @@ const Perfil = () => {
           </section>
           <Button colorSchema="">Sair</Button>
         </ProfileCard>
+        {isVisible && <AddTech setIsVisible={setIsVisible} />}
+        {makeVisible && <AddProject setMakeVisible={setMakeVisible} />}
       </Container>
     </>
   );

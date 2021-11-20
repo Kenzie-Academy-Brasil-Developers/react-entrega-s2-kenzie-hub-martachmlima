@@ -30,6 +30,7 @@ export const PopHeader = styled.div`
     background-color: var(--white);
     font-size: 14px;
     color: var(--grey100);
+    cursor: pointer;
   }
 `;
 

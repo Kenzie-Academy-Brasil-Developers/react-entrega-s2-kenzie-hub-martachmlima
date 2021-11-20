@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
     --grey50: #999999;
     --grey0: #F5F5F5;
     --white: #FFFFFF;
+    --red: #FF0000;
     }
 
     h1{

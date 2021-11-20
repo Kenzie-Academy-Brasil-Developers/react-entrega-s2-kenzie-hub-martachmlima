@@ -23,6 +23,7 @@ export const Container = styled.div`
       :hover {
         color: var(--purple);
         font-weight: bold;
+        cursor: pointer;
       }
     }
   }

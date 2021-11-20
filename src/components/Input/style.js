@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledInput = styled.div`
+export const Container = styled.div`
   width: 348px;
   height: 60px;
   border-radius: 8px;

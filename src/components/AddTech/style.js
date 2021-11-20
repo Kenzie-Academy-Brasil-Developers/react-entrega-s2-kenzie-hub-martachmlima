@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.form`
   width: 320px;
   position: absolute;
   background-color: var(--white);
@@ -26,8 +26,20 @@ export const Container = styled.div`
       :hover {
         color: var(--purple);
         font-weight: bold;
+        cursor: pointer;
       }
     }
+  }
+
+  select {
+    color: var(--grey100);
+    background-color: var(--grey0);
+    border-radius: 5px;
+    height: 60px;
+    width: 80%;
+    color: var(--grey50);
+    border: none;
+    margin: 10px 0;
   }
 
   button {

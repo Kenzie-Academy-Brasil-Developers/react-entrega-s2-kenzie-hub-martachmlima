@@ -34,6 +34,17 @@ export const Form = styled.form`
 
   p {
     margin-bottom: 10px;
+    color: var(--grey50);
+  }
+
+  select {
+    color: var(--grey100);
+    background-color: var(--grey0);
+    border-radius: 5px;
+    height: 60px;
+    width: 348px;
+    color: var(--grey50);
+    border: none;
   }
 
   button {
@@ -41,17 +52,9 @@ export const Form = styled.form`
   }
 
   span {
-    width: 63px;
-    height: 40px;
-    border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 14px;
-    line-height: 28px;
-    background: none;
-    color: var(--purple);
-    :hover {
-      background-color: var(--lightpurple);
-      cursor: pointer;
-    }
+    color: var(--red);
+    background-color: var(--white);
+    font-size: 12px;
+    margin-bottom: 10px;
   }
 `;

@@ -43,6 +43,11 @@ export const Form = styled.form`
 
   p {
     margin-bottom: 10px;
+    color: var(--red);
+  }
+
+  section {
+    margin-bottom: 10px;
     margin-top: 10px;
   }
 
