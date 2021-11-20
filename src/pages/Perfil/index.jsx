@@ -28,6 +28,9 @@ const Perfil = ({ authenticated }) => {
     JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
   );
 
+  const [user] = useState(
+    JSON.parse(localStorage.getItem("@Kenziehub:user")) || ""
+  );
 
   const getTechs = () => {
     axios
@@ -95,16 +98,16 @@ const Perfil = ({ authenticated }) => {
         </Content>
         <ProfileCard>
           <div>
-            <p>Nome do Kenzinho</p>
-            <span>Módulo do Kenzinho</span>
+            <p>{user.name}</p>
+            <span>{user.course_module}</span>
           </div>
           <section>
             <p>Ligar agora</p>
-            <p>contato do kenzinho</p>
+            <p>{user.contact}</p>
           </section>
           <section>
             <p>Enviar e-mail</p>
-            <p>e-mail do kenzinho</p>
+            <p>{user.email}</p>
           </section>
           <Button colorSchema="">Sair</Button>
         </ProfileCard>
