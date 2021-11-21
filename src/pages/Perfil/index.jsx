@@ -3,16 +3,20 @@ import Button from "../../components/Button";
 import TechCard from "../../components/TechCard";
 import ProjectCard from "../../components/ProjectCard";
 import { Redirect } from "react-router";
-import { useHistory } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import AddTech from "../../components/AddTech";
 import AddProject from "../../components/AddProject";
+import EditProject from "../../components/EditProject";
+import { FiSmartphone } from "react-icons/fi";
+import { FiMail } from "react-icons/fi";
 
 const Perfil = ({ authenticated }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const [makeVisible, setMakeVisible] = useState(false);
+
+  const [editPVisible, setEditPVisible] = useState(false);
 
   const changeVisibility = () => {
     setIsVisible(true);
@@ -22,47 +26,64 @@ const Perfil = ({ authenticated }) => {
     setMakeVisible(true);
   };
 
-  const [techs, setTechs] = useState();
+  const [user] = useState(
+    JSON.parse(localStorage.getItem("@Kenziehub:user")) || ""
+  );
+
+  const [techs, setTechs] = useState(user.techs);
+
+  const loadTechs = () => {
+    axios
+      .get(`https://kenziehub.herokuapp.com/users/${user.id}`)
+      .then((response) => {
+        setTechs(response.data.techs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const [token] = useState(
     JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
   );
 
-  const [user] = useState(
-    JSON.parse(localStorage.getItem("@Kenziehub:user")) || ""
-  );
+  const deleteTech = (id) => {
+    const newTechs = techs.filter((tech) => tech.id !== id);
 
-  const getTechs = () => {
     axios
-      .get("https://kenziehub.herokuapp.com/users/techs", {
+      .delete(`https://kenziehub.herokuapp.com/users/techs:${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        console.log(response);
-      })
+      .then((response) => setTechs(newTechs))
       .catch((err) => {
         console.log(err);
-        /* toast.error("E-mail ou senha inválidos"); */
       });
   };
 
-  const createTech = () => {
+  const changeTech = (id, status) => {
     axios
-      .post("https://kenziehub.herokuapp.com/users/techs", {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .put(
+        `https://kenziehub.herokuapp.com/users/techs:${id}`,
+        {
+          status: status,
         },
-      })
-      .then((response) => {
-        console.log(response);
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => console.log(response))
       .catch((err) => {
         console.log(err);
-        /* toast.error("E-mail ou senha inválidos"); */
       });
   };
+
+  useEffect(() => {
+    loadTechs();
+  }, []);
 
   if (!authenticated) {
     return <Redirect to="/" />;
@@ -74,6 +95,7 @@ const Perfil = ({ authenticated }) => {
         <h1>
           Kenzie <span>Hub</span>
         </h1>
+        <p>Olá, {user.name}!</p>
       </Header>
       <Container>
         <Content>
@@ -83,9 +105,15 @@ const Perfil = ({ authenticated }) => {
               +
             </Button>
           </span>
-          <TechCard />
-          <TechCard />
-          <TechCard />
+          {techs.map((item) => (
+            <TechCard
+              key={item.id}
+              title={item.title}
+              status={item.status}
+              deleteTech={() => deleteTech(item.id)}
+              changeTech={() => changeTech(item.id, item.status)}
+            />
+          ))}
         </Content>
         <Content>
           <span>
@@ -102,17 +130,30 @@ const Perfil = ({ authenticated }) => {
             <span>{user.course_module}</span>
           </div>
           <section>
-            <p>Ligar agora</p>
-            <p>{user.contact}</p>
+            <aside>
+              <p>Ligar agora</p>
+              <p>{user.contact}</p>
+            </aside>
+            <section>
+              <FiSmartphone />
+            </section>
           </section>
           <section>
-            <p>Enviar e-mail</p>
-            <p>{user.email}</p>
+            <aside>
+              <p>Enviar e-mail</p>
+              <p>{user.email}</p>
+            </aside>
+            <article>
+              <FiMail />
+            </article>
           </section>
           <Button colorSchema="">Sair</Button>
         </ProfileCard>
-        {isVisible && <AddTech setIsVisible={setIsVisible} />}
+        {isVisible && (
+          <AddTech setIsVisible={setIsVisible} loadTechs={loadTechs} />
+        )}
         {makeVisible && <AddProject setMakeVisible={setMakeVisible} />}
+        {editPVisible && <EditProject setEditPVisible={setEditPVisible} />}
       </Container>
     </>
   );

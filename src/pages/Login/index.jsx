@@ -38,7 +38,6 @@ const Login = ({ authenticated, setAuthenticated }) => {
         localStorage.setItem("@Kenziehub:token", JSON.stringify(token));
         localStorage.setItem("@Kenziehub:user", JSON.stringify(user));
         setAuthenticated(true);
-        console.log(response);
         history.push("/perfil");
       })
       .catch((err) => {

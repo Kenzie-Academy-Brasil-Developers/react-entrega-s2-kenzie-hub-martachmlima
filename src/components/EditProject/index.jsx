@@ -2,7 +2,7 @@ import { Container } from "./style";
 import Input from "../Input";
 import Button from "../Button";
 
-const EditProject = () => {
+const EditProject = ({ setEditPVisible }) => {
   return (
     <Container>
       <p>

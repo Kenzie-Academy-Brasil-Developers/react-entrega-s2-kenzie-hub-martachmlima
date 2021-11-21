@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 export const Header = styled.header`
-  height: 80px;
+  height: fit-content;
   box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
 
   span {
     background-color: var(--purple);
@@ -14,6 +16,17 @@ export const Header = styled.header`
 
   h1 {
     padding: 10px;
+  }
+
+  p {
+    font-weight: 700;
+    margin: 15px;
+    font-size: 15px;
+    color: var(--grey50);
+    @media (min-width: 1000px) {
+      margin: 20px;
+      font-size: 20px;
+    }
   }
 `;
 
@@ -67,6 +80,10 @@ export const ProfileCard = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
+      > p {
+        margin: 15px 0;
+        font-weight: 700;
+      }
     }
 
     section {
@@ -80,6 +97,45 @@ export const ProfileCard = styled.div`
       align-items: center;
       padding: 5px;
       font-size: 14px;
+      > aside {
+        margin-left: 50px;
+        > p {
+          margin-bottom: 10px;
+          color: var(--grey100);
+        }
+      }
+      > section {
+        position: relative;
+        top: -90%;
+        left: -40%;
+        width: 50px;
+        background-color: var(--purple);
+      }
+      > article {
+        margin-bottom: 30px;
+        border-radius: 5px;
+        height: 65px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        font-size: 14px;
+        position: relative;
+        top: -90%;
+        left: -40%;
+        width: 50px;
+        background-color: var(--green);
+        > svg {
+          height: 40px;
+          width: 40px;
+          color: var(--white);
+        }
+      }
+      > svg {
+        height: 40px;
+        width: 40px;
+        color: var(--white);
+      }
     }
     button {
       width: 300px;

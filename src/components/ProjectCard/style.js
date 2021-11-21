@@ -4,7 +4,7 @@ export const ContainerProject = styled.div`
   height: 77px;
   width: 200px;
   display: flex;
-  margin-bottom: 15px;
+  margin: 15px 0;
 
   section {
     height: 77px;
@@ -12,6 +12,20 @@ export const ContainerProject = styled.div`
     background-color: var(--lightpurple);
     border-radius: 5px;
     margin-left: 20px;
+    :hover {
+      background-color: var(--purple);
+      > svg {
+        color: var(--white);
+      }
+    }
+
+    > svg {
+      width: 40px;
+      height: 40px;
+      margin-left: 15px;
+      margin-top: 15px;
+      color: var(--purple);
+    }
   }
 
   div {
@@ -31,6 +45,20 @@ export const ContainerProject = styled.div`
       height: fit-content;
       border-radius: 5px;
       padding: 5px;
+    }
+  }
+
+  aside {
+    position: relative;
+    width: fit-content;
+    left: 40%;
+    color: var(--grey50);
+    cursor: pointer;
+    @media (min-width: 700px) {
+      left: 205%;
+    }
+    @media (min-width: 1000px) {
+      left: 70%;
     }
   }
 `;

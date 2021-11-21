@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const AddTech = ({ setIsVisible }) => {
+const AddTech = ({ setIsVisible, loadTechs }) => {
   const [token] = useState(
     JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
   );
@@ -26,9 +26,7 @@ const AddTech = ({ setIsVisible }) => {
           },
         }
       )
-      .then((response) => {
-        console.log(response);
-      })
+      .then((response) => loadTechs())
       .catch((err) => {
         console.log(err);
       });
@@ -43,11 +41,14 @@ const AddTech = ({ setIsVisible }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(formSchema) });
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
 
   const changeVisibility = () => {
     setIsVisible(false);
   };
+
   return (
     <Container onSubmit={handleSubmit(createTech)}>
       <section>
@@ -56,6 +57,7 @@ const AddTech = ({ setIsVisible }) => {
       </section>
       <Input>
         <input placeholder="nome da Tech" {...register("title")}></input>
+        <p>{errors.title?.message}</p>
       </Input>
       <p>Selecionar status:</p>
       <select {...register("status")}>
@@ -63,6 +65,7 @@ const AddTech = ({ setIsVisible }) => {
         <option value="Intermediário">Intermediário</option>
         <option value="Avançado">Avançado</option>
       </select>
+      <p>{errors.status?.message}</p>
       <Button type="submit">Cadastrar</Button>
     </Container>
   );
