@@ -51,7 +51,7 @@ const Perfil = ({ authenticated }) => {
     const newTechs = techs.filter((tech) => tech.id !== id);
 
     axios
-      .delete(`https://kenziehub.herokuapp.com/users/techs:${id}`, {
+      .delete(`https://kenziehub.herokuapp.com/users/techs/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -65,7 +65,7 @@ const Perfil = ({ authenticated }) => {
   const changeTech = (id, status) => {
     axios
       .put(
-        `https://kenziehub.herokuapp.com/users/techs:${id}`,
+        `https://kenziehub.herokuapp.com/users/techs/${id}`,
         {
           status: status,
         },
