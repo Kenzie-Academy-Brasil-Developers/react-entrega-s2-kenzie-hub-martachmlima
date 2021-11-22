@@ -4,8 +4,10 @@ import Button from "../Button";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import { useState } from "react";
 
-const EditTech = ({ setEditTVisible, title, status, changeTech }) => {
+const EditTech = ({ setEditTVisible, title, status, id }) => {
   const hide = () => {
     setEditTVisible(false);
   };
@@ -23,8 +25,31 @@ const EditTech = ({ setEditTVisible, title, status, changeTech }) => {
     resolver: yupResolver(formSchema),
   });
 
+  const [token] = useState(
+    JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
+  );
+
+  const changeTech = (id, status) => {
+    axios
+      .put(
+        `https://kenziehub.herokuapp.com/users/techs/${id}`,
+        {
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => console.log(response))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <Container onSubmit={handleSubmit(changeTech)}>
+    <Container onSubmit={handleSubmit(changeTech(id, status))}>
       <section>
         <h4>Editar Tecnologia</h4>
         <span onClick={() => hide()}>X</span>

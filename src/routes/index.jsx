@@ -28,7 +28,10 @@ const Routes = () => {
           <Cadastro authenticated={authenticated} />
         </Route>
         <Route exact path="/perfil">
-          <Perfil authenticated={authenticated} />
+          <Perfil
+            authenticated={authenticated}
+            setAuthenticated={setAuthenticated}
+          />
         </Route>
       </Switch>
     </div>

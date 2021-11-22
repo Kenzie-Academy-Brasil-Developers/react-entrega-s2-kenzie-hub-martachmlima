@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.form`
   width: 320px;
   position: absolute;
   background-color: var(--white);
@@ -29,12 +29,25 @@ export const Container = styled.div`
     }
   }
 
+  section {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    span {
+      :hover {
+        color: var(--purple);
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
   div {
     display: flex;
     justify-content: space-between;
-    button {
+    > button {
       width: 47%;
       padding: 0;
+      font-size: 14px;
     }
   }
 `;

@@ -23,6 +23,7 @@ export const ContainerProject = styled.div`
       width: 40px;
       height: 40px;
       margin-left: 15px;
+      margin-right: 15px;
       margin-top: 15px;
       color: var(--purple);
     }
@@ -58,7 +59,10 @@ export const ContainerProject = styled.div`
       left: 205%;
     }
     @media (min-width: 1000px) {
-      left: 70%;
+      left: 60%;
+    }
+    > p {
+      margin-bottom: 10px;
     }
   }
 `;

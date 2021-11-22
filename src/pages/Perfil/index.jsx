@@ -11,7 +11,7 @@ import EditProject from "../../components/EditProject";
 import { FiSmartphone } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 
-const Perfil = ({ authenticated }) => {
+const Perfil = ({ authenticated, setAuthenticated }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const [makeVisible, setMakeVisible] = useState(false);
@@ -30,7 +30,12 @@ const Perfil = ({ authenticated }) => {
     JSON.parse(localStorage.getItem("@Kenziehub:user")) || ""
   );
 
+  const [token] = useState(
+    JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
+  );
   const [techs, setTechs] = useState(user.techs);
+
+  const [works, setWorks] = useState(user.works);
 
   const loadTechs = () => {
     axios
@@ -43,9 +48,16 @@ const Perfil = ({ authenticated }) => {
       });
   };
 
-  const [token] = useState(
-    JSON.parse(localStorage.getItem("@Kenziehub:token")) || ""
-  );
+  const loadWorks = () => {
+    axios
+      .get(`https://kenziehub.herokuapp.com/users/${user.id}`)
+      .then((response) => {
+        setWorks(response.data.works);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const deleteTech = (id) => {
     const newTechs = techs.filter((tech) => tech.id !== id);
@@ -62,20 +74,16 @@ const Perfil = ({ authenticated }) => {
       });
   };
 
-  const changeTech = (id, status) => {
+  const deleteWork = (id) => {
+    const newWorks = works.filter((work) => work.id !== id);
+
     axios
-      .put(
-        `https://kenziehub.herokuapp.com/users/techs/${id}`,
-        {
-          status: status,
+      .delete(`https://kenziehub.herokuapp.com/users/works/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => console.log(response))
+      })
+      .then((response) => setWorks(newWorks))
       .catch((err) => {
         console.log(err);
       });
@@ -84,6 +92,15 @@ const Perfil = ({ authenticated }) => {
   useEffect(() => {
     loadTechs();
   }, []);
+
+  useEffect(() => {
+    loadWorks();
+  }, []);
+
+  const logOut = () => {
+    localStorage.clear();
+    setAuthenticated(false);
+  };
 
   if (!authenticated) {
     return <Redirect to="/" />;
@@ -101,7 +118,7 @@ const Perfil = ({ authenticated }) => {
         <Content>
           <span>
             <h4>Minhas Tecnologias</h4>
-            <Button colorSchema="green" onClick={() => changeVisibility()}>
+            <Button colorSchema="green" onClick={changeVisibility}>
               +
             </Button>
           </span>
@@ -111,7 +128,6 @@ const Perfil = ({ authenticated }) => {
               title={item.title}
               status={item.status}
               deleteTech={() => deleteTech(item.id)}
-              changeTech={() => changeTech(item.id, item.status)}
             />
           ))}
         </Content>
@@ -120,9 +136,15 @@ const Perfil = ({ authenticated }) => {
             <h4>Meus trabalhos</h4>
             <Button onClick={() => changeProdVisibility()}>+</Button>
           </span>
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+          {works.map((item) => (
+            <ProjectCard
+              key={item.id}
+              title={item.title}
+              description={item.description}
+              deploy_url={item.deploy_url}
+              deleteWork={() => deleteWork(item.id)}
+            />
+          ))}
         </Content>
         <ProfileCard>
           <div>
@@ -147,12 +169,16 @@ const Perfil = ({ authenticated }) => {
               <FiMail />
             </article>
           </section>
-          <Button colorSchema="">Sair</Button>
+          <Button onClick={() => logOut()} colorSchema="">
+            Sair
+          </Button>
         </ProfileCard>
         {isVisible && (
           <AddTech setIsVisible={setIsVisible} loadTechs={loadTechs} />
         )}
-        {makeVisible && <AddProject setMakeVisible={setMakeVisible} />}
+        {makeVisible && (
+          <AddProject setMakeVisible={setMakeVisible} loadWorks={loadWorks} />
+        )}
         {editPVisible && <EditProject setEditPVisible={setEditPVisible} />}
       </Container>
     </>

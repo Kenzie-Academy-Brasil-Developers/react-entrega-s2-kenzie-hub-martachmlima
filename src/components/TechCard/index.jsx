@@ -3,7 +3,7 @@ import { useState } from "react";
 import EditTech from "../../components/EditTech";
 import { FiCodesandbox } from "react-icons/fi";
 
-const TechCard = ({ title, status, deleteTech, changeTech }) => {
+const TechCard = ({ title, status, deleteTech, id }) => {
   const [editTVisible, setEditTVisible] = useState(false);
 
   const edit = () => {
@@ -30,7 +30,7 @@ const TechCard = ({ title, status, deleteTech, changeTech }) => {
           status={status}
           title={title}
           setEditTVisible={setEditTVisible}
-          changeTech={changeTech}
+          id={id}
         />
       )}
     </>
