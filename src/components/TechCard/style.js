@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const ContainerTech = styled.div`
   height: 77px;
-  width: 350px;
   display: flex;
   margin: 15px 0;
 
@@ -55,7 +54,7 @@ export const ContainerTech = styled.div`
     color: var(--grey50);
     cursor: pointer;
     @media (min-width: 700px) {
-      left: 100%;
+      left: 59%;
     }
     @media (min-width: 1000px) {
       left: 20%;

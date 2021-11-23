@@ -52,7 +52,7 @@ export const ContainerProject = styled.div`
   aside {
     position: relative;
     width: fit-content;
-    left: 40%;
+    left: 25%;
     color: var(--grey50);
     cursor: pointer;
     @media (min-width: 700px) {
