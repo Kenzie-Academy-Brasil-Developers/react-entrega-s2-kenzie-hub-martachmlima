@@ -112,7 +112,9 @@ const Perfil = ({ authenticated, setAuthenticated }) => {
         <h1>
           Kenzie <span>Hub</span>
         </h1>
-        <p>Olá, {user.name}!</p>
+        <p>
+          Olá, {user.name}! <Button onClick={() => logOut()}>Logout</Button>
+        </p>
       </Header>
       <Container>
         <Content>

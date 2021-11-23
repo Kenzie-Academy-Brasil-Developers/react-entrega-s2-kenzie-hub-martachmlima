@@ -23,9 +23,26 @@ export const Header = styled.header`
     margin: 15px;
     font-size: 15px;
     color: var(--grey50);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     @media (min-width: 1000px) {
       margin: 20px;
       font-size: 20px;
+    }
+    > button {
+      width: fit-content;
+      height: fit-content;
+      margin-top: 10px;
+      padding: 2px;
+      background-color: var(--lightpurple);
+      color: var(--purple);
+      font-weight: 300;
+      font-size: 12px;
+      @media (min-width: 1000px) {
+        display: none;
+      }
     }
   }
 `;
